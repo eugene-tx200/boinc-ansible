@@ -1,0 +1,58 @@
+---
+# This playbook deploys BOINC-client.
+- hosts: boinc
+  become: yes
+  vars_files:
+  - credentials.yml
+
+  tasks:
+  - name: 'Enable EPEL repository'
+    dnf:
+      name: epel-release
+      state: present
+    when: ansible_facts['os_family'] == 'RedHat'
+
+  - name: 'Install BOINC package'
+    dnf:
+      name: boinc-client
+      state: present
+    when: ansible_facts['os_family'] == 'RedHat'
+
+  - name: 'Install BOINC package'
+    apt:
+      name: boinc-client
+      state: present
+    when: (ansible_facts['os_family'] == 'Debian') or (ansible_facts['os_family'] == 'Ubuntu')
+
+  - name: 'Configure BOINC client: global_prefs_override.xml'
+    template:
+      src: templates/global_prefs_override.xml
+      dest: /var/lib/boinc/global_prefs_override.xml
+      group: boinc
+      mode: 0640
+
+  - name: 'Configure BOINC client: gui_rpc_auth.cfg'
+    template:
+      src: templates/gui_rpc_auth.cfg.j2
+      dest: /var/lib/boinc/gui_rpc_auth.cfg
+      group: boinc
+      mode: 0640
+
+  - name: 'Configure BOINC client: cc_config.xml'
+    template:
+      src: templates/cc_config.xml
+      dest: /var/lib/boinc/cc_config.xml
+      group: boinc
+      mode: 0640
+
+  - name: 'Reload BOINC service'
+    service:
+      name: boinc-client
+      state: reloaded
+
+  - name: 'Open firewall port'
+    firewalld:
+      port: 31416/tcp
+      permanent: yes
+      state: enabled
+...

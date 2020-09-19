@@ -1,0 +1,17 @@
+<!--
+This is a minimal configuration file cc_config.xml of the BOINC core client.
+For a complete list of all available options and logging flags and their
+meaning see: https://boinc.berkeley.edu/wiki/client_configuration
+-->
+<cc_config>
+  <log_flags>
+    <task>1</task>
+    <file_xfer>1</file_xfer>
+    <sched_ops>1</sched_ops>
+    <gui_rpc_debug>0</gui_rpc_debug>
+    <http_debug>0</http_debug>
+  </log_flags>
+  <options>
+    <allow_remote_gui_rpc>1</allow_remote_gui_rpc>
+  </options>
+</cc_config>

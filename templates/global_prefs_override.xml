@@ -1,0 +1,17 @@
+<!--
+This configuration file global_prefs_override.xml for the BOINC core client
+can be used to override global preferences locally. For a complete list of
+all preferences which can be overridden see:
+http://boinc.berkeley.edu/trac/wiki/PrefsOverride
+-->
+<global_preferences>
+  <run_if_user_active>1</run_if_user_active>
+  <run_gpu_if_user_active>1</run_gpu_if_user_active>
+  <suspend_cpu_usage>0.000000</suspend_cpu_usage>
+  <max_ncpus_pct>100.000000</max_ncpus_pct>
+  <disk_min_free_gb>0.100000</disk_min_free_gb>
+  <vm_max_used_pct>90.000000</vm_max_used_pct>
+  <ram_max_used_busy_pct>90.000000</ram_max_used_busy_pct>
+  <ram_max_used_idle_pct>90.000000</ram_max_used_idle_pct>
+  <cpu_usage_limit>100.000000</cpu_usage_limit>
+</global_preferences>
