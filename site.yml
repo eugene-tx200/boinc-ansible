@@ -35,6 +35,12 @@
       state: present
     when: ansible_facts['os_family'] == 'Alpine'
 
+  - name: 'Install BOINC package'
+    zypper:
+      name: boinc-client
+      state: present
+    when: ansible_facts['os_family'] == 'Suse'
+
 # Add config files
   - name: 'Configure BOINC client: global_prefs_override.xml'
     template:
@@ -69,6 +75,7 @@
     firewalld:
       port: 31416/tcp
       permanent: yes
+      immediate: yes
       state: enabled
     when: ansible_facts.services['firewalld.service']['state'] is defined
 ...

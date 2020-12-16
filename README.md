@@ -14,3 +14,4 @@ Update 'hosts' inventory and create 'credentials.yml' (Copy credentials.yml.exam
 * CentOS 8
 * Ubuntu 18.04 and 20.04
 * Alpine linux edge
+* OpenSUSE Tumbleweed JeOS
