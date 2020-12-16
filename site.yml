@@ -6,6 +6,11 @@
   - credentials.yml
 
   tasks:
+# Add additional facts
+  - name: 'Populate service facts'
+    service_facts:
+
+# Install packages
   - name: 'Enable EPEL repository'
     dnf:
       name: epel-release
@@ -24,6 +29,13 @@
       state: present
     when: (ansible_facts['os_family'] == 'Debian') or (ansible_facts['os_family'] == 'Ubuntu')
 
+  - name: 'Install BOINC package'
+    apk:
+      name: boinc
+      state: present
+    when: ansible_facts['os_family'] == 'Alpine'
+
+# Add config files
   - name: 'Configure BOINC client: global_prefs_override.xml'
     template:
       src: templates/global_prefs_override.xml
@@ -45,14 +57,18 @@
       group: boinc
       mode: 0640
 
-  - name: 'Reload BOINC service'
+#  Enable and (Re)start BOINC service
+  - name: 'Enable and restart BOINC service'
     service:
       name: boinc-client
-      state: reloaded
+      enabled: yes
+      state: restarted
 
+# Open firewall port
   - name: 'Open firewall port'
     firewalld:
       port: 31416/tcp
       permanent: yes
       state: enabled
+    when: ansible_facts.services['firewalld.service']['state'] is defined
 ...
