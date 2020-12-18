@@ -1,0 +1,6 @@
+---
+- name: 'Install BOINC package'
+  zypper:
+    name: boinc-client
+    state: present
+...

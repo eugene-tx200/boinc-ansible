@@ -6,40 +6,15 @@
   - credentials.yml
 
   tasks:
-# Add additional facts
   - name: 'Populate service facts'
     service_facts:
 
 # Install packages
-  - name: 'Enable EPEL repository'
-    dnf:
-      name: epel-release
-      state: present
-    when: ansible_facts['os_family'] == 'RedHat'
-
-  - name: 'Install BOINC package'
-    dnf:
-      name: boinc-client
-      state: present
-    when: ansible_facts['os_family'] == 'RedHat'
-
-  - name: 'Install BOINC package'
-    apt:
-      name: boinc-client
-      state: present
-    when: (ansible_facts['os_family'] == 'Debian') or (ansible_facts['os_family'] == 'Ubuntu')
-
-  - name: 'Install BOINC package'
-    apk:
-      name: boinc
-      state: present
-    when: ansible_facts['os_family'] == 'Alpine'
-
-  - name: 'Install BOINC package'
-    zypper:
-      name: boinc-client
-      state: present
-    when: ansible_facts['os_family'] == 'Suse'
+  - name: 'Install packages'
+    block:
+      - include_tasks: "package_tasks/{{ ansible_facts['os_family'] | lower }}.yml"
+    rescue:
+      - include_tasks: "package_tasks/default.yml"
 
 # Add config files
   - name: 'Configure BOINC client: global_prefs_override.xml'

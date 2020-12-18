@@ -1,0 +1,6 @@
+---
+- name: 'Install BOINC package'
+  apk:
+    name: boinc
+    state: present
+...

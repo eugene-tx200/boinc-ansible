@@ -1,0 +1,6 @@
+---
+- name: 'Install BOINC package'
+  apt:
+    name: boinc-client
+    state: present
+...
